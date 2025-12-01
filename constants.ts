@@ -1,4 +1,3 @@
-
 import { AfiEntry, OscarNomination } from './types';
 
 // TMDB Configuration
@@ -78,20 +77,7 @@ tt6692188,7,2023-12-21,"El Chapo","El Chapo",https://www.imdb.com/title/tt669218
 tt2187850,9,2023-12-21,"Pablo Escobar: El Patrón del Mal","Pablo Escobar: El Patrón del Mal",https://www.imdb.com/title/tt2187850,TV Series,8.4,45,2012,"Biography, Crime, Drama, History, Thriller",6709,"2021-02-03",
 tt1704637,8,2023-12-21,"La Reina del Sur","La Reina del Sur",https://www.imdb.com/title/tt1704637,TV Series,7.8,378,2011,"Drama, Action, Crime, Thriller",3813,"2011-02-28",
 tt9224104,1,2023-09-30,"Meg 2: The Trench","Meg 2: The Trench",https://www.imdb.com/title/tt9224104,Movie,5.0,116,2023,"Sci-Fi, Action, Adventure, Horror, Thriller",98465,"2023-08-04","Ben Wheatley"
-tt9244578,8,2023-09-24,"Rise of Empires: Ottoman","Rise of Empires: Ottoman",https://www.imdb.com/title/tt9244578,TV Series,8.0,45,2020,"Documentary, History, Drama, War",46914,"2020-09-10",
-tt11737520,8,2023-09-20,"One Piece","One Piece",https://www.imdb.com/title/tt11737520,TV Series,8.3,60,2023,"Action, Fantasy, Adventure, Drama, Comedy",181805,"2023-08-31",
-tt21113540,7,2023-09-16,"El Conde","El conde",https://www.imdb.com/title/tt21113540,Movie,6.4,110,2023,"Comedy, Fantasy, History, Horror",15925,"2023-09-15","Pablo Larraín"
-tt9251798,7,2023-09-02,"Ragnarok","Ragnarok",https://www.imdb.com/title/tt9251798,TV Series,7.3,45,2020,"Drama, Fantasy, Mystery, Action, Thriller",53090,"2020-01-31",
-tt1462764,6,2023-09-02,"Indiana Jones and the Dial of Destiny","Indiana Jones and the Dial of Destiny",https://www.imdb.com/title/tt1462764,Movie,6.5,154,2023,"Action, Adventure, Sci-Fi",226761,"2023-06-30","James Mangold"
-tt0439572,1,2023-07-25,"The Flash","The Flash",https://www.imdb.com/title/tt0439572,Movie,6.6,144,2023,"Action, Adventure, Fantasy, Sci-Fi",242337,"2023-06-16","Andy Muschietti"
-tt1517268,7,2023-07-24,"Barbie","Barbie",https://www.imdb.com/title/tt1517268,Movie,6.8,114,2023,"Comedy, Adventure, Fantasy",632568,"2023-07-21","Greta Gerwig"
-tt6791350,5,2023-07-17,"Guardians of the Galaxy Vol. 3","Guardians of the Galaxy Vol. 3",https://www.imdb.com/title/tt6791350,Movie,7.9,150,2023,"Action, Adventure, Sci-Fi, Comedy",452904,"2023-05-05","James Gunn"
-tt5090568,5,2023-07-17,"Transformers: Rise of the Beasts","Transformers: Rise of the Beasts",https://www.imdb.com/title/tt5090568,Movie,6.0,127,2023,"Action, Adventure, Sci-Fi",127569,"2023-06-09","Steven Caple Jr."
-tt0046912,8,2023-06-19,"Dial M for Murder","Dial M for Murder",https://www.imdb.com/title/tt0046912,Movie,8.2,105,1954,"Crime, Mystery, Drama, Thriller",201749,"1954-05-29","Alfred Hitchcock"
-tt0363547,6,2023-06-18,"Dawn of the Dead","Dawn of the Dead",https://www.imdb.com/title/tt0363547,Movie,7.2,101,2004,"Horror, Action",285341,"2004-03-19","Zack Snyder"
-tt11358390,7,2023-06-18,"Renfield","Renfield",https://www.imdb.com/title/tt11358390,Movie,6.4,93,2023,"Comedy, Horror, Fantasy, Action",117033,"2023-04-14","Chris McKay"
-tt6543652,7,2023-06-18,"Cold War","Zimna wojna",https://www.imdb.com/title/tt6543652,Movie,7.5,89,2018,"Drama, Romance, Music",64698,"2018-06-08","Pawel Pawlikowski"
-tt9253866,8,2023-05-01,"Our Planet","Our Planet",https://www.imdb.com/title/tt9253866,TV Series,9.2,50,2019,"Documentary",59508,"2019-04-05"
+tt9244578,8,2023-09-24,"Rise of Empires: Ottoman","Rise of Empires: Ottoman",https://www.imdb.com/title/tt9244578,TV Series,8.0,45,2020,"Documentary, History, Drama, War",46914,"2020-09-10"
 `;
 
 export const AFI_LIST: AfiEntry[] = [

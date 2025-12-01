@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Movie, FilterState, SortOption, SortDirection } from '../types';
 import { MovieCard } from '../components/MovieCard';

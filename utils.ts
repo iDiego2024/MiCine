@@ -1,4 +1,3 @@
-
 import { Movie, FilterState, TmdbData, OscarNomination, OmdbData } from './types';
 import { TMDB_API_KEY, TMDB_BASE_URL, TMDB_IMAGE_BASE_URL, MOCK_OSCAR_DATA, OMDB_API_KEY } from './constants';
 

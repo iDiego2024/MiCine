@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Movie } from '../types';
 import { MOCK_OSCAR_DATA } from '../constants';

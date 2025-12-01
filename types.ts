@@ -1,4 +1,3 @@
-
 export interface Movie {
   Const: string;
   YourRating: number | null;

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Movie, TmdbData, OmdbData } from '../types';
 import { getRatingColorClass, getPlaceholderImage, getTmdbData, getReviewUrl, getTrailerUrl, getOscarWins, getOmdbData } from '../utils';
