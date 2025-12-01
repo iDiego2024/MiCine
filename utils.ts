@@ -4,10 +4,12 @@ import { TMDB_API_KEY, TMDB_BASE_URL, TMDB_IMAGE_BASE_URL, MOCK_OSCAR_DATA, OMDB
 
 // Simple CSV parser that handles quoted strings
 export const parseCSV = (csv: string): Movie[] => {
+  if (!csv) return [];
+  
   const lines = csv.split('\n').filter(line => line.trim() !== '');
   if (lines.length === 0) return [];
 
-  const headers = lines[0].split(',').map(h => h.trim());
+  // We assume the first line is headers, but we map manually below for type safety
   const movies: Movie[] = [];
 
   for (let i = 1; i < lines.length; i++) {
@@ -36,26 +38,31 @@ export const parseCSV = (csv: string): Movie[] => {
       return cell;
     });
 
-    if (cleanRow.length === headers.length) {
+    // Ensure we have at least the Title (index 3) to create a valid movie object
+    if (cleanRow.length > 3) {
       const movie: any = {};
       
       // Manual mapping based on expected CSV structure
-      movie.Const = cleanRow[0];
+      // Const, Your Rating, Date Rated, Title, Original Title, URL, Title Type, IMDb Rating, Runtime, Year, Genres, Num Votes, Release Date, Directors
+      movie.Const = cleanRow[0] || `unknown-${i}`;
       movie.YourRating = cleanRow[1] ? parseFloat(cleanRow[1]) : null;
-      movie.DateRated = cleanRow[2];
-      movie.Title = cleanRow[3];
-      movie.OriginalTitle = cleanRow[4];
-      movie.URL = cleanRow[5];
-      movie.TitleType = cleanRow[6];
+      movie.DateRated = cleanRow[2] || '';
+      movie.Title = cleanRow[3] || 'Untitled';
+      movie.OriginalTitle = cleanRow[4] || movie.Title;
+      movie.URL = cleanRow[5] || '';
+      movie.TitleType = cleanRow[6] || 'Movie';
       movie.IMDbRating = cleanRow[7] ? parseFloat(cleanRow[7]) : null;
       movie.RuntimeMins = cleanRow[8] ? parseInt(cleanRow[8]) : 0;
       movie.Year = cleanRow[9] ? parseInt(cleanRow[9]) : 0;
       movie.Genres = cleanRow[10] ? cleanRow[10].split(',').map(g => g.trim()) : [];
       movie.NumVotes = cleanRow[11] ? parseInt(cleanRow[11]) : 0;
-      movie.ReleaseDate = cleanRow[12];
+      movie.ReleaseDate = cleanRow[12] || '';
+      // Directors might be the last column and could be missing if empty at end of line
       movie.Directors = cleanRow[13] ? cleanRow[13].split(',').map(d => d.trim()) : [];
 
-      movies.push(movie as Movie);
+      if (movie.Title) {
+        movies.push(movie as Movie);
+      }
     }
   }
   
@@ -71,12 +78,14 @@ export const getRatingColorClass = (rating: number | null): string => {
   return 'border-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.3)]';
 };
 
-export const normalizeString = (str: string): string => {
+export const normalizeString = (str: string | null | undefined): string => {
+  if (!str) return '';
   return str.toLowerCase().replace(/[^a-z0-9]/g, '');
 };
 
 // Fallback placeholder
 export const getPlaceholderImage = (title: string): string => {
+  if (!title) return `https://picsum.photos/300/450`;
   let hash = 0;
   for (let i = 0; i < title.length; i++) {
     hash = title.charCodeAt(i) + ((hash << 5) - hash);
@@ -87,7 +96,7 @@ export const getPlaceholderImage = (title: string): string => {
 
 // TMDB Fetcher
 export const getTmdbData = async (title: string, year: number): Promise<TmdbData | null> => {
-  if (!TMDB_API_KEY) return null;
+  if (!TMDB_API_KEY || !title) return null;
 
   try {
     const url = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(title)}&year=${year}`;
@@ -113,7 +122,7 @@ export const getTmdbData = async (title: string, year: number): Promise<TmdbData
 
 // OMDb Fetcher
 export const getOmdbData = async (title: string, year: number): Promise<OmdbData | null> => {
-    if (!OMDB_API_KEY) return null;
+    if (!OMDB_API_KEY || !title) return null;
     try {
         const response = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(title)}&y=${year}&apikey=${OMDB_API_KEY}`);
         const data = await response.json();
@@ -132,17 +141,20 @@ export const getOmdbData = async (title: string, year: number): Promise<OmdbData
 
 // Generate Search Links
 export const getReviewUrl = (title: string, year: number) => {
+  if (!title) return '#';
   const query = encodeURIComponent(`reseña película ${title} ${year}`);
   return `https://www.google.com/search?q=${query}`;
 };
 
 export const getTrailerUrl = (title: string, year: number) => {
+  if (!title) return '#';
   const query = encodeURIComponent(`${title} ${year} trailer español`);
   return `https://www.youtube.com/results?search_query=${query}`;
 };
 
 // Check for Oscars in Mock Data
 export const getOscarWins = (title: string): OscarNomination[] => {
+  if (!title) return [];
   const normalizedTitle = normalizeString(title);
   return MOCK_OSCAR_DATA.filter(nom => 
     normalizeString(nom.film) === normalizedTitle && nom.winner
