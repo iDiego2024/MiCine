@@ -269,4 +269,33 @@ export const MOCK_OSCAR_DATA: OscarNomination[] = [
   { year: 2023, category: "Mejor Actriz", film: "Blonde", nominee: "Ana de Armas", winner: false },
   { year: 2023, category: "Mejor Actriz", film: "To Leslie", nominee: "Andrea Riseborough", winner: false },
   { year: 2023, category: "Mejor Actriz", film: "The Fabelmans", nominee: "Michelle Williams", winner: false },
+
+  // Historical Data for Specific Detail View (Titanic Example)
+  { year: 1998, category: "Mejor Película", film: "Titanic", nominee: "James Cameron and Jon Landau", winner: true },
+  { year: 1998, category: "Mejor Director", film: "Titanic", nominee: "James Cameron", winner: true },
+  { year: 1998, category: "Mejor Actriz", film: "Titanic", nominee: "Kate Winslet", winner: false },
+  { year: 1998, category: "Mejor Actriz de Reparto", film: "Titanic", nominee: "Gloria Stuart", winner: false },
+  { year: 1998, category: "Mejor Dirección de Arte", film: "Titanic", nominee: "Peter Lamont; Michael Ford", winner: true },
+  { year: 1998, category: "Mejor Fotografía", film: "Titanic", nominee: "Russell Carpenter", winner: true },
+  { year: 1998, category: "Mejor Diseño de Vestuario", film: "Titanic", nominee: "Deborah L. Scott", winner: true },
+  { year: 1998, category: "Mejor Montaje", film: "Titanic", nominee: "Conrad Buff, James Cameron, Richard A. Harris", winner: true },
+  { year: 1998, category: "Mejor Banda Sonora", film: "Titanic", nominee: "James Horner", winner: true },
+  { year: 1998, category: "Mejor Canción Original", film: "Titanic", nominee: "My Heart Will Go On", winner: true },
+  { year: 1998, category: "Mejor Sonido", film: "Titanic", nominee: "Gary Rydstrom, Tom Johnson, Gary Summers, Mark Ulano", winner: true },
+  { year: 1998, category: "Mejor Edición de Sonido", film: "Titanic", nominee: "Tom Bellfort, Christopher Boyes", winner: true },
+  { year: 1998, category: "Mejores Efectos Visuales", film: "Titanic", nominee: "Robert Legato, Mark Lasoff, Thomas L. Fisher, Michael Kanfer", winner: true },
+  { year: 1998, category: "Mejor Maquillaje", film: "Titanic", nominee: "Tina Earnshaw, Greg Cannom, Simon Thompson", winner: false },
+
+  // The Lord of the Rings: The Return of the King (11 wins, 0 losses)
+  { year: 2004, category: "Mejor Película", film: "The Lord of the Rings: The Return of the King", nominee: "Barrie M. Osborne, Peter Jackson and Fran Walsh", winner: true },
+  { year: 2004, category: "Mejor Director", film: "The Lord of the Rings: The Return of the King", nominee: "Peter Jackson", winner: true },
+  { year: 2004, category: "Mejor Guion Adaptado", film: "The Lord of the Rings: The Return of the King", nominee: "Fran Walsh, Philippa Boyens, Peter Jackson", winner: true },
+  { year: 2004, category: "Mejor Montaje", film: "The Lord of the Rings: The Return of the King", nominee: "Jamie Selkirk", winner: true },
+  { year: 2004, category: "Mejor Dirección de Arte", film: "The Lord of the Rings: The Return of the King", nominee: "Grant Major; Dan Hennah, Alan Lee", winner: true },
+  { year: 2004, category: "Mejor Diseño de Vestuario", film: "The Lord of the Rings: The Return of the King", nominee: "Ngila Dickson, Richard Taylor", winner: true },
+  { year: 2004, category: "Mejor Maquillaje", film: "The Lord of the Rings: The Return of the King", nominee: "Richard Taylor, Peter King", winner: true },
+  { year: 2004, category: "Mejor Banda Sonora", film: "The Lord of the Rings: The Return of the King", nominee: "Howard Shore", winner: true },
+  { year: 2004, category: "Mejor Canción Original", film: "The Lord of the Rings: The Return of the King", nominee: "Into the West", winner: true },
+  { year: 2004, category: "Mejor Sonido", film: "The Lord of the Rings: The Return of the King", nominee: "Christopher Boyes, Michael Semanick, Michael Hedges, Hammond Peek", winner: true },
+  { year: 2004, category: "Mejores Efectos Visuales", film: "The Lord of the Rings: The Return of the King", nominee: "Jim Rygiel, Joe Letteri, Randall William Cook, Alex Funke", winner: true },
 ];

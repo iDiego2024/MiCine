@@ -2,7 +2,7 @@
 import React, { useState, useMemo } from 'react';
 import { Movie } from '../types';
 import { MOCK_OSCAR_DATA } from '../constants';
-import { Trophy, Award } from 'lucide-react';
+import { Trophy, Award, Scroll, Search } from 'lucide-react';
 import { MovieCard } from '../components/MovieCard';
 
 interface OscarsProps {
@@ -12,6 +12,7 @@ interface OscarsProps {
 export const Oscars: React.FC<OscarsProps> = ({ movies }) => {
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   const [showWinnersOnly, setShowWinnersOnly] = useState(false);
+  const [statMovieSearch, setStatMovieSearch] = useState('');
 
   // Get available years from mock data
   const availableYears = useMemo(() => {
@@ -29,6 +30,12 @@ export const Oscars: React.FC<OscarsProps> = ({ movies }) => {
     return Array.from(cats);
   }, [yearData]);
 
+  // Get all unique movies in Oscar data for the stats dropdown
+  const allOscarMovies = useMemo(() => {
+    const films = new Set(MOCK_OSCAR_DATA.map(n => n.film));
+    return Array.from(films).sort();
+  }, []);
+
   // Check if a film is in the user's catalog (case insensitive match)
   const getCatalogMatch = (filmTitle: string) => {
     return movies.find(m => 
@@ -37,8 +44,27 @@ export const Oscars: React.FC<OscarsProps> = ({ movies }) => {
     );
   };
 
+  // Movie Stats Logic
+  const selectedMovieStats = useMemo(() => {
+    if (!statMovieSearch) return null;
+    const stats = MOCK_OSCAR_DATA.filter(m => m.film === statMovieSearch);
+    if (stats.length === 0) return null;
+
+    const wins = stats.filter(s => s.winner).length;
+    const totalNominations = stats.length;
+    const year = stats[0].year; // Assuming mainly one year, or take the first
+
+    return {
+      film: statMovieSearch,
+      year,
+      wins,
+      totalNominations,
+      details: stats
+    };
+  }, [statMovieSearch]);
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       {/* Header Section */}
       <div className="bg-cine-900 border border-slate-800 p-6 rounded-2xl">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -114,7 +140,6 @@ export const Oscars: React.FC<OscarsProps> = ({ movies }) => {
                   const match = getCatalogMatch(nom.film);
                   
                   // Use catalog movie data if available, otherwise construct a ghost movie object for the card
-                  // Oscar years are usually ceremony years (e.g., 2024 ceremony honors 2023 films)
                   const movieData: Movie = match || {
                     Const: `oscar-${idx}`,
                     Title: nom.film,
@@ -148,6 +173,108 @@ export const Oscars: React.FC<OscarsProps> = ({ movies }) => {
             </div>
           );
         })}
+      </div>
+
+      {/* Divider */}
+      <div className="border-t border-slate-800 my-12"></div>
+
+      {/* Movie Specific Stats Section */}
+      <div className="bg-cine-900/50 border border-slate-800 rounded-2xl p-8">
+        <div className="flex items-center gap-3 mb-6">
+          <Scroll className="text-cine-400" size={28} />
+          <h2 className="text-2xl font-bold text-white">Historial por Película</h2>
+        </div>
+        
+        <p className="text-slate-400 mb-6">Consulta el desglose detallado de premios y nominaciones para una película específica.</p>
+
+        <div className="relative max-w-md mb-8">
+          <select
+            value={statMovieSearch}
+            onChange={(e) => setStatMovieSearch(e.target.value)}
+            className="w-full bg-cine-950 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 appearance-none focus:outline-none focus:border-cine-400 focus:ring-1 focus:ring-cine-400"
+          >
+            <option value="">Selecciona una película...</option>
+            {allOscarMovies.map(movie => (
+              <option key={movie} value={movie}>{movie}</option>
+            ))}
+          </select>
+          <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={18} />
+        </div>
+
+        {selectedMovieStats && (
+          <div className="animate-in slide-in-from-bottom-4 duration-500 flex flex-col md:flex-row gap-8">
+            {/* Left: Movie Card Presentation */}
+            <div className="w-full md:w-64 flex-shrink-0">
+               <MovieCard 
+                  movie={getCatalogMatch(selectedMovieStats.film) || {
+                    Const: `stat-${selectedMovieStats.film}`,
+                    Title: selectedMovieStats.film,
+                    Year: selectedMovieStats.year - 1,
+                    YourRating: null,
+                    IMDbRating: null,
+                    Genres: [],
+                    Directors: [],
+                    RuntimeMins: 0,
+                    NumVotes: 0,
+                    DateRated: '',
+                    OriginalTitle: selectedMovieStats.film,
+                    ReleaseDate: '',
+                    TitleType: 'Movie',
+                    URL: ''
+                  }} 
+               />
+            </div>
+
+            {/* Right: Stats Details */}
+            <div className="flex-grow">
+              <div className="flex flex-wrap gap-4 mb-6">
+                <div className="bg-cine-950 border border-cine-500/30 px-5 py-3 rounded-xl">
+                  <div className="text-xs text-cine-400 uppercase tracking-wider font-bold mb-1">Premios Ganados</div>
+                  <div className="text-3xl font-bold text-white flex items-center gap-2">
+                    {selectedMovieStats.wins} 
+                    <Trophy size={20} className="text-yellow-500" />
+                  </div>
+                </div>
+                <div className="bg-cine-950 border border-slate-700 px-5 py-3 rounded-xl">
+                  <div className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">Nominaciones</div>
+                  <div className="text-3xl font-bold text-white flex items-center gap-2">
+                    {selectedMovieStats.totalNominations}
+                    <Scroll size={20} className="text-slate-500" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-cine-950 rounded-xl border border-slate-800 overflow-hidden">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-slate-900/50 text-slate-400 uppercase text-xs font-bold">
+                    <tr>
+                      <th className="px-6 py-3">Categoría</th>
+                      <th className="px-6 py-3">Nominado</th>
+                      <th className="px-6 py-3 text-right">Resultado</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800">
+                    {selectedMovieStats.details.map((detail, idx) => (
+                      <tr key={idx} className={`hover:bg-slate-800/30 transition-colors ${detail.winner ? 'bg-green-900/10' : ''}`}>
+                        <td className="px-6 py-4 font-medium text-slate-200">{detail.category}</td>
+                        <td className="px-6 py-4 text-slate-400">{detail.nominee}</td>
+                        <td className="px-6 py-4 text-right">
+                          {detail.winner ? (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-500/20 text-green-400 border border-green-500/30">
+                              <Trophy size={10} /> Ganador
+                            </span>
+                          ) : (
+                            <span className="text-slate-500">Nominado</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

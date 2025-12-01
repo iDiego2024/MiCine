@@ -17,8 +17,6 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, oscarContext }) => 
   const [tmdbData, setTmdbData] = useState<TmdbData | null>(null);
   const [omdbData, setOmdbData] = useState<OmdbData | null>(null);
   
-  if (!movie) return null;
-
   // If viewing in Oscar context, override border color logic based on winner status
   const borderColor = oscarContext 
     ? (oscarContext.isWinner ? 'border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]' : 'border-slate-700')
@@ -28,7 +26,6 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, oscarContext }) => 
   const generalOscarWins = !oscarContext ? getOscarWins(movie.Title) : [];
 
   useEffect(() => {
-    if (!movie?.Title) return;
     let isMounted = true;
     
     getTmdbData(movie.Title, movie.Year).then(data => {
@@ -62,7 +59,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, oscarContext }) => 
       <div className="relative h-[60%] w-full overflow-hidden bg-slate-800">
         <img 
           src={posterUrl} 
-          alt={movie.Title || "Movie Poster"} 
+          alt={movie.Title} 
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
         />
